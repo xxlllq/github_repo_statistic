@@ -1,2 +1,2 @@
 # github_repo_statistic
-自己Github中的Repository的统计.
+自己Github中Repository的统计.
