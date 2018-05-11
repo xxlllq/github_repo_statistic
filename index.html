@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>通过Github Api获取信息</title>
+		<link rel="shortcut icon" href="/assets/images/logo/logo.ico" type="image/x-icon">
+		<meta name="description" content="梅花西飞">
+		<meta name="keywords" content="梅花西飞I">
+		<meta name="author" content="梅花西飞">
+
+		<link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<style>
+			.panel {
+				width: 1024px;
+				margin: 20px auto;
+				min-height: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">梅花西飞—Github自建项目统计面板</div>
+			<!--<div class="panel-body">
+				<p></p>
+			</div>-->
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><span class="fa fa-sort-numeric-asc"></span> 序号</th>
+							<th><span class="fa fa-info-circle"></span> 名称</th>
+							<th><span class="fa fa-star"></span> Star</th>
+							<th><span class="fa fa-code-fork"></span> Fork</th>
+						</tr>
+					</thead>
+					<tbody id="repo-owner-detail">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">梅花西飞—Github Fork项目统计面板</div>
+			<!--<div class="panel-body">
+				<p></p>
+			</div>-->
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><span class="fa fa-sort-numeric-asc"></span> 序号</th>
+							<th><span class="fa fa-info-circle"></span> 名称</th>
+							<th><span class="fa fa-star"></span> Star</th>
+							<th><span class="fa fa-code-fork"></span> Fork</th>
+						</tr>
+					</thead>
+					<tbody id="repo-forkOther-detail">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<script>
+			//Json排序
+			function sortStarCount(a, b) {
+				return b.stargazers_count - a.stargazers_count;
+			}
+
+			//API的URL为
+			//https://developer.github.com/v3/
+			//https://api.github.com/
+			$(function() {
+				$.ajax({
+					url: "//api.github.com/users/xxlllq/repos",
+					type: "get",
+					dataType: "json",
+					success: function(data) {
+						if(data) {
+							data = data.sort(sortStarCount); //排序
+							var htmlOwner = "",
+								forkOtherHtml = "",
+								owner = [];
+							forkOther = [];
+							for(var i = 0; i < data.length; i++) {
+								var item = data[i];
+								if(!item.fork) {
+									owner.push(item);
+								} else {
+									forkOther.push(item);
+								}
+
+							}
+
+							//自建
+							for(var i = 0; i < owner.length; i++) {
+								var item = owner[i];
+								htmlOwner += "<tr>" +
+									"<th class='col-md-2' scope='row'>" + (i + 1) + "</th>" +
+									"<td class='col-md-6'><a href='" + item.html_url + "' target='_blank'>" + item.name + "</a></td>" +
+									"<td class='col-md-2'><span class='badge btn-info'>" + item.stargazers_count + "</span></td>" +
+									"<td class='col-md-2'><span class='badge'>" + item.forks_count + "</span></td>" +
+									"</tr>"
+							}
+
+							//Fork
+							for(var i = 0; i < forkOther.length; i++) {
+								var item = forkOther[i];
+
+								forkOtherHtml += "<tr>" +
+									"<th class='col-md-2' scope='row'>" + (i + 1) + "</th>" +
+									"<td class='col-md-6'><a href='" + item.homepage + "' target='_blank'>" + item.name + "</a></td>" +
+									"<td class='col-md-2'><span class='badge'>" + item.stargazers_count + "</span></td>" +
+									"<td class='col-md-2'><span class='badge'>" + item.forks_count + "</span></td>" +
+									"</tr>"
+							}
+
+							$("#repo-owner-detail").append(htmlOwner);
+							$("#repo-forkOther-detail").append(forkOtherHtml);
+						}
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>
