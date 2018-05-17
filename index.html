@@ -70,6 +70,20 @@
 			</div>
 		</div>
 
+		<div class="panel panel-default">
+		    <div class="panel-heading">自然数分解（任何一个数值分解为n(n>=2)个连续自然数之和）</div>
+		    <div class="panel-body">
+			<form class="form-inline" style="margin:0 auto">
+			    <div class="form-group">
+				    <input type="text" class="form-control" id="inputNumber" placeholder="输入数值">
+			    </div>
+			    <button type="button" class="btn btn-primary" id="cacl">计算</button>
+			</form>
+		    </div>
+		    <ul id="caclResult" class="list-group">
+		    </ul>
+		</div>
+		
 		<script>
 			//Json排序
 			function sortStarCount(a, b) {
@@ -131,7 +145,29 @@
 						}
 					}
 				})
-			})
+			});
+			
+			//分解
+			 $("#cacl").click(function () {
+				var numTxt = $("#inputNumber").val();
+				if (numTxt) {
+				    var count = 1,num = parseInt(numTxt),html="";
+				    for (var i = 1; i <= Math.floor(num / 2) ; i++) {
+					var sum = i;
+					var sumTex = "分解方式" + count + "：" + i + " ";
+					for (var j = i + 1; j <= Math.ceil(num / 2) ; j++) {
+					    sum += j;
+					    sumTex += j + " ";
+					    if (sum == num) {
+						count++;
+						html += "<li class='list-group-item'>" + sumTex + "</li>"
+					    }
+					}
+				    };
+				    $("#caclResult").html(html);
+				}
+			    });
+
 		</script>
 	</body>
 
