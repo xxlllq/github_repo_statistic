@@ -1,7 +1,7 @@
 # :bar_chart:github_repo_statistic
 * Github中Repository的[统计](https://xxlllq.github.io/github_repo_statistic/)
 
-<div align=center><a href="https://xxlllq.github.io/github_repo_statistic/" target="_blank"><img width="1000px" height="auto" src="https://github.com/xxlllq/github_repo_statistic/blob/master/static.jpg"/></a></div>
+<div align=center><a href="https://xxlllq.github.io/github_repo_statistic/" target="_blank"><img width="1000px" height="auto" src="https://github.com/xxlllq/github_repo_statistic/blob/master/static.png"/></a></div>
 
 * 只需要改变index.html文件中ajax请求的URL(//api.github.com/users/{你的github用户名}/repos)
 
